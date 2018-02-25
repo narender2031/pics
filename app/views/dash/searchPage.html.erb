@@ -1,0 +1,200 @@
+<body class="dash-body nav-sm" id="dash">
+    <div class="container body">
+        <div class="main_container">
+            <%= render partial: "layouts/left_col", :locals => {active: "Dashboard"} %>
+            <%= render partial: "layouts/nav_bar", :locals => {active: "Dashboard"} %>
+            <div class="right_col" >
+                <div class="row"> 
+                    <div class="showSearchResult">
+                        <% if @follow_user.blank? %>
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h5 class="result_header">Search Content</h5>
+                                </div>
+                                <div class="x_content">
+                                    <div class="results">
+                                        <div class="user">
+                                            <div class="row">
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="SearcuserImage">
+                                                        <center>
+                                                            <div class="image">
+                                                                <% if @search_user.image.blank?%>
+                                                                    <%= image_tag "profile.png", class:"", style:"width:40%"%>
+                                                                <% else %>
+                                                                    <%= image_tag @search_user.image, class:"", style:"width:40%"%>
+                                                                <% end %>    
+                                                            </div>
+                                                            <div class="SearchUserInfo">
+                                                                <div class="info">
+                                                                    <p class="userName-search"><%= @search_user.first_name %> <%= @search_user.last_name %></p>
+                                                                </div>
+
+                                                            </div>
+                                                        </center>    
+                                                    </div>
+                                                </div>   
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="FollowInfo">
+                                                        <div class="info">
+                                                            <div class="row">
+                                                                <div class="col-md-6 col-sm-6 col-xs-6"  style="text-align: center; color: #444; border-right: 1px solid #444;">
+                                                                    <div class="follow">
+                                                                        <h4 class="">Follow</h4>
+                                                                        <h4 class="count"><%= @follows_count %></h4>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center; color: #444;>
+                                                                    <div class="follower">
+                                                                        <h4 class="">Follower</h4>
+                                                                        <h4 class="count"><%= @follower_count %></h4>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="row">
+                                                <center>
+                                                    <div class="SubscribeOptions">
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                        </div>
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                            <div class="follow">
+                                                                <%= form_tag follow_path do %>
+                                                                    <%= hidden_field_tag :user_id,params[:user_id], value:current_user.id %>
+                                                                    <%= hidden_field_tag :search_user_id,params[:search_user_id], value:@search_user.id %>
+                                                                    <%= submit_tag :follow, class:"subs"%>
+                                                                <% end %>
+                                                            </div>
+                                                        </div>  
+                                                        <div class="col-md-4 col-sm-4 col-xs-12">
+                                                        </div>  
+                                                    </div>
+                                                </center>    
+                                            </div>    
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <% else %> 
+                            <div class="col-md-8 col-sm-8 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h4 class="result_header">Your Result</h4>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="UserImage">
+                                                    <center>
+                                                        <div class="image">
+                                                            <% if @search_user.image.blank?%>
+                                                                <%= image_tag "profile.png", class:"", style:"width:40%"%>
+                                                            <% else %>
+                                                                <%= image_tag @search_user.image, class:"", style:"width:40%"%>
+                                                            <% end %>
+                                                        </div>
+                                                        <div class="Userinfo">
+                                                            <div class="UserName">
+                                                                <h4 class=""><%= @search_user.first_name%> <%= @search_user.last_name%></h4>
+                                                                <h5 class=""><%= @search_user.user_name %></h5>
+                                                            </div>
+
+                                                        </div>
+                                                    </center>    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                                <div class="ProfileInfo">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center; color: #444; border-right: 1px solid #444;">
+                                                            <div class="follow">
+                                                                <div class="result">
+                                                                    <h4 class="FollowByUser">Follow</h4>
+                                                                    <h4 class="count"><%= @follows_count %></h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-sm-6 col-xs-6" style="text-align: center; color: #444;>
+                                                            <div class="follower">
+                                                                <div class="result">
+                                                                    <h4 class="FollowByUser">Follower</h4>
+                                                                    <h4 class="count"><%= @follower_count %></h4>
+                                                                </div>
+                                                            </div>   
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                                <div class="Unfollow">
+                                                    <div class="unfollowData">
+                                                        <div class="unfollow">
+                                                            <center>
+                                                                <%= form_tag unfollow_path do %>
+                                                                    <%= hidden_field_tag :user_id, params[:user_id], value:current_user.id %>
+                                                                    <%= hidden_field_tag :subscribe_user_id, params[:subscribe_user_id], value:@search_user.id %>
+                                                                    <%= submit_tag "Unfollow", class:"unfollow_user" %>
+                                                                <% end %>
+                                                            </center>    
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <div class="TotalSnap">
+                                            <h5 class="t_snap_header">Total Snap</h5>
+                                        </div>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="total">
+                                            <h4 class="count t_snap"><%= @snaps_count%></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                            <div class="col-md-12 col-sm-12 col-xs-12">      
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h4 class="result_header">User Snaps</h4>           
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <% if @snaps.blank? %>
+                                                    <p class="result_header">There is no snap yet!</p>
+                                            <% else %>
+                                                <% @snaps.each do |snap|%>
+                                                    <div class="col-md-3 col-sm-3 col-xs-6">
+                                                        <div class="image view view-first">
+                                                            <center>
+                                                                <%= image_tag snap.image, class:"", style:"width: 70%; display: block;"%>
+                                                            </center>
+                                                        </div>
+                                                    </div>
+                                                <% end %>  
+                                            <% end %>      
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        <% end %>   
+                    </div>
+                </div>   
+            </div>
+        </div>
+    </div>
+</body>    

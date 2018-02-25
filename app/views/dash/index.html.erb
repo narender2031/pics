@@ -1,0 +1,333 @@
+<body class="dash-body nav-sm" id="dash">
+    <div class="container body">
+        <div class="main_container">
+            <%= render partial: "layouts/left_col", :locals => {active: "Dashboard"} %>
+            <%= render partial: "layouts/nav_bar", :locals => {active: "Dashboard"} %>
+            <div class="right_col" >
+                <div class="row"> 
+                <% flash.each do |name, msg|%>
+                    <center> 
+                        <div class='flash-message alert alert-<%= name %> flash-message-dashbord' id="flash-message-desktop" style="    margin-top: 35px;">
+                            <center><p class="flash-message-dash" style="position: relative;top: -2px;color: #facdcd;"><%= msg %></p></center>
+                        </div>
+                    </center>
+                <% end %>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="SearchUser">
+                            <div class="row">
+                                <center>
+                                    <%= form_tag('/search', :method=> :get) do %>
+                                        <%= text_field_tag :email, params[:value], placeholder:"Search user e.g email or user_name", class:"UserField"%>
+                                            <br>
+                                        <%= submit_tag :submit, value:"Search", class:"searchUserButton"%>
+                                    <% end %>
+                                </center>    
+                            </div>
+                        </div>
+                        <% if @feeds.blank? %>
+                            <div class="x_panel">
+                                <div class="x_content">
+                                    <div class="row"> 
+                                        <div class="SnapImage">
+                                            <div class="FollowerUsers">
+                                                <div class='col-md-6 col-xs-12 col-sm-6'>
+                                                    <div class"snap">
+                                                       <h5 class="">No! Snaps yet! </h5>  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+                        <% else %>
+                            <div id="dataSnap">
+                            <% @feeds.each do |snap|%>
+                                <div class="x_panel">
+                                    <div class="x_content">
+                                        <div class="row"> 
+                                            <div class="SnapImage">
+                                                <div class="FollowerUsers">
+                                                    <div class='col-md-6 col-xs-12 col-sm-6'>
+                                                        <div class"snap">
+                                                            <%= image_tag snap.image , class:"", style:"width: 90%;"%> 
+                                                        </div>
+                                                        <div class="timeOfImage">
+                                                            <div class="time">
+                                                                <h5 class="time"><%= time_ago_in_words(snap.time) %> ago</h5>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 colsm-6 col-xs-12">
+                                                        <div class="snapInfo">
+                                                            <div class="user Info">
+                                                                <div class="row">
+                                                                   <h5 class="user_name_snaps"> <%= snap.user_name %></h5>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="UnsunscribeUser">
+                                                            <div class="ButtonUnsbscribe">
+                                                                <% if current_user.user_name != snap.user_name %>
+                                                                    <%= form_tag unfollow_path do %>
+                                                                        <%= hidden_field_tag :user_id, params[:user_id], value:current_user.id %>
+                                                                        <%= hidden_field_tag :subscribe_user_id, params[:subscribe_user_id], value:snap.subs_user_id%>
+                                                                        <%= submit_tag "Unfollow", class:"Unsunscribe " %>
+                                                                        
+                                                                    <% end %>    
+                                                                <% end %>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </div>
+                                </div>
+                            <% end %>
+                            </div>   
+                        <% end %>     
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h4 class="profile_status">Profile Status</h4>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-md-6 col-sm-12 col-xs-12 profile_panel_dash">
+                                    <div class="ProfileImage">
+                                        <div class="">
+                                             <% if @user.image.blank? %>
+                                                <%= image_tag "profile.png", class:"userImage", id:""%>
+                                             <% else %>
+                                                <%= image_tag @user.image, class:"userImage", id:""%>
+                                            <% end %>    
+                                        </div>
+                                    </div>
+                                    <div class="userInfo">
+                                        <div class="">
+                                            <div class="userName">
+                                                <h6 class="name"><%= @user.first_name%> <%= @user.last_name%></h6>
+                                            </div>
+                                            <div class="UserName">
+                                                <h6 class="UserName"><%= @user.user_name %></h6>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>  
+                                <div class="col-md-6 col-sm-12 col-xs-12">
+                                    <div class="profileStatus">
+                                        <div class="row">
+                                            <div class="col-md-6 col-sm-6 col-xs-6" style="color: #444;">
+                                                <div class="totalFollower" style="height: 66px;">
+                                                    <h4 class="follower">Follow</h4>
+                                                    <div class="count_follow">
+                                                        <button type="button" class="btn btn-primary follow_modal" data-toggle="modal" data-target="#exampleModal">
+                                                            <h4 class="count follow"><%= @follow_count %></h4>
+                                                        </button>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-sm-6 col-xs-6"  style="color: #444;">
+                                                <div class="totalFollowing">
+                                                    <h4 class="follower">follower</h4>
+                                                    <div class="count_follow">
+                                                    <button type="button" class="btn btn-primary follow_modal" data-toggle="modal" data-target="#followerModal">
+                                                        <h4 class="count follow"><%= @follower_count%></h4>
+                                                    </button>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: 30px;">
+                                            <div class="editProfile">
+                                                <%= link_to profile_path, class:"editProfilePage" do %>
+                                                    Edit    
+                                                <% end %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="row">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h5 class="snap_head">Total Snaps</h5>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="total">
+                                                <h4 class="count total_snap_count"><%= @total_snaps %></h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <div class="row">
+                                <div class="x_panel">
+                                    <div class="x_title">
+                                        <h5 class="snap_head">Upload Snap</h5>
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="row">
+                                            <div class="total">
+                                            <%= form_for @snap_upload, url: uploadSnap_path do |f| %>
+                                                    <fieldset>
+                                                        <div class="uploadImage">
+                                                            <center>
+                                                                <%= f.file_field :image , class: "uploadField"%>
+                                                                <p class="error-snap">Please Select an Image</p>
+                                                            </div>    
+                                                        </div>  
+                                                        <div class="SubmitImage"> 
+                                                            <center> 
+                                                                <%= f.submit "Upload", class:"SnapUpload" %>
+                                                            </center>
+                                                        </div>    
+                                                    <fieldset>
+                                            <% end %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Follow</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="listOfFollow">
+                                        <div class="FollowUser">
+                                            <% @folloe_user.each do |follow|%>
+                                                <% @user_follow =  User.find(follow.follow_id)%>
+                                                <div class="row" style="margin-bottom:20px">
+                                                    <div class="col-md-2 col-sm-2 col-xs-12">
+                                                        <% if @user_follow.image.blank? %>
+                                                            <%= image_tag "profile.png", class:"", style:"width:100%; margin-left:10px" %>
+                                                        <% else %>
+                                                            <%= image_tag @user_follow.image, class:"", style:"width:100%; margin-left:10px" %>
+                                                        <% end %>    
+                                                    </div>
+                                                    <div class="col-md-10 col-sm-10 col-xs-12">
+                                                        <%= link_to follow_path(follow.id) do %>
+                                                            <div class="user-name"> <%= @user_follow.first_name%> <%=  @user_follow.last_name%></div>
+                                                        <% end %> 
+                                                        <div class="row" style="margin-top:20px;">
+                                                            <div class="buttonProfile">
+                                                            <%= link_to follow_path(@user_follow.id), class:"profile_btn" do %>
+                                                                Profile
+                                                            <% end %>   
+                                                            </div>
+                                                        </div>   
+                                                    </div>
+                                                </div>
+                                               
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+                <div class="modal fade" id="followerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Follower</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="listOfFollow">
+                                        <div class="FollowUser">
+                                            <% @follower_user.each do |follow|%>
+                                                <% @user_follow =  User.find(follow.follower_id)%>
+                                                <div class="row" style="margin-bottom:20px">
+                                                    <div class="col-md-2 col-sm-2 col-xs-12">
+                                                        <% if @user_follow.image.blank? %>
+                                                            <%= image_tag "profile.png", class:"", style:"width:100%; margin-left:10px" %>
+                                                        <% else %>
+                                                            <%= image_tag @user_follow.image, class:"", style:"width:100%; margin-left:10px" %>
+                                                        <% end %>    
+                                                    </div>
+                                                    <div class="col-md-10 col-sm-10 col-xs-12">
+                                                        <%= link_to follow_path(follow.id) do %>
+                                                            <div class="user-name"> <%= @user_follow.first_name%> <%=  @user_follow.last_name%></div>
+                                                        <% end %>   
+                                                        <div class="row" style="margin-top:20px;">
+                                                            <div class="buttonProfile">
+                                                            <%= link_to follow_path(@user_follow.id), class:"profile_btn" do %>
+                                                                Profile
+                                                            <% end %>   
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            
+                                            <% end %>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    <script>
+        $('.flash-message ').fadeOut(3000);
+    </script>
+    <script>
+        function auto_load(){
+            $.ajax({
+                url: "http://localhost:3000",
+                cachae: false,
+                success: function(data){
+                    $("#dataSnap").load('/ #dataSnap');
+                    console.log("hellllo")
+                }
+            })
+        }
+        $(document).ready(function(){
+             auto_load();
+            
+        })
+       setInterval(auto_load, 9000);
+    </script>
+    <script type="text/javascript">
+        $('#follow').click(function(){
+            console.log("hello");
+            $("#memberModal").modal('show');
+        })
+    </script>
+    <script>
+        $('.SnapUpload').click(function(e){
+            var snap = $('#snap_image').val()
+            if(snap == ""){
+             $('.error-snap').css('display','block');
+             $('.error-snap').fadeOut(3000);
+             e.preventDefault();
+
+            }
+        })
+    </script>
+</body>    

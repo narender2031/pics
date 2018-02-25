@@ -1,0 +1,138 @@
+<body  style=" background: url(http://p1.pichost.me/i/64/1886374.jpg) no-repeat center center fixed;">
+<div class="row">
+    <div class="col-md-4 col-sm-3 col-xs-1">
+    </div>
+    <div class="col-md-4 col-sm-6 col-xs-10">
+        <div class="row">
+            <center>
+                <div class="loginPanel">
+                    <div class="logo">
+                        <div class="row">
+                            <div class="logoPanel">
+                                <%= image_tag "logo.png", class:"brandLogo"%>
+                            </div>
+                        </div>
+                    </div>
+                    <% flash.each do |name, msg|%>
+                        <center> 
+                            <div class='flash-message alert alert-<%= name %> flash-message-dashbord' id="flash-message-desktop">
+                                <center><p class="flash-message-dash" style="position: relative;top: -2px;color: #facdcd;"><%= msg %></p></center>
+                            </div>
+                        </center>
+                    <% end %>
+                    <div class="loginDetails">
+                        <div class="loginFrom">
+                            <%= form_for @user, url: register_path do |f|%>
+                                <fieldset class="loginFieldset">
+                                    <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;">
+                                        <div class="fname">
+                                            <%= f.text_field :first_name, class:"LoginFields", placeholder:"First Name",id:"first_name"%>
+                                            <p class="r-error-message" id="Fn">First Name is missing</p>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="lname">
+                                        <%= f.text_field :last_name, class:"LoginFields", placeholder:"Last Name", id:"last_name"%>
+                                        <p class="r-error-message" id="Ln">Last Name is missing</p>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="uName">
+                                         <%= f.text_field :user_name, class:"LoginFields", placeholder:"Usr Name", id:"user_name"%>
+                                         <p class="r-error-message" id="Uname">User Name is missing</p>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="email">
+                                            <%= f.email_field :email, class:"LoginFields", placeholder:"Email", id:"email"%>
+                                            <p class="r-error-message" id="Email">email is missing</p>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="password">
+                                            <%= f.password_field :password, class:"LoginFields", placeholder:"Password", id:"password"%>
+                                            <p class="r-error-message" id="pass">password is missing</p>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="uphone">
+                                            <%= f.phone_field :phone, class:"LoginFields", placeholder:"Phone", id:"phone",require: true,  onkeypress:'validate(event)',  minlength:"10", maxlength:"10"%>
+                                            <p class="r-error-message" id="phn">phone number is missing</p>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="password">
+                                            <%= f.submit "SignUp", class:"LoginButton" , id:"register"%>
+                                        </div>    
+                                    </div>
+                                    <div class="col-md-12 col-sm-12 col-xs-12">
+                                        <div class="RegisterConnect">
+                                            <p class="notResister">already register? <span class="createAnAccountLink"><%= link_to login_path do %>Click here for login.<% end %></span></p>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            <% end %>  
+                        </div>
+                    </center>    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-3 col-xs-1">
+    </div>
+</div>
+<script> 
+function validate(evt) {
+    var theEvent = evt || window.event;
+    var key = theEvent.keyCode || theEvent.which;
+    key = String.fromCharCode( key );
+    var regex = /[0-9]|\./;
+    if( !regex.test(key) ) {
+      theEvent.returnValue = false;
+      if(theEvent.preventDefault) theEvent.preventDefault();
+    }
+  }
+   $('#register').click(function(e){
+        var first_name = $('#first_name').val();
+        if(first_name == ""){
+            e.preventDefault();
+            $("#Fn").css("display", "block");
+            $("#Fn").fadeOut(4000);
+        
+        }
+     var last_name = $('#last_name').val();
+        if(last_name == ""){
+            e.preventDefault();
+            $("#Ln").css("display", "block");
+           $("#Ln").fadeOut(4000);
+        } 
+      var email = $('#email').val();
+      if(email == ""){
+        e.preventDefault();
+        $("#Email").css("display", "block");
+       $("#Email").fadeOut(4000);
+      } 
+      var password = $('#password').val();
+      if(password == ""){
+        e.preventDefault();
+        $("#pass").css("display", "block");
+        $("#pass").fadeOut(4000);
+      }   
+      var user_name = $('#User_name').val();
+      if(user_name == ""){
+        e.preventDefault();
+        $("#Uname").css("display", "block");
+        $("#Uname").fadeOut(4000);
+      } 
+         
+      var phone = $('#phone').val();
+      if(phone == ""){
+        e.preventDefault();
+        $("#phn").css("display", "block");
+        $("#phn").fadeOut(4000);
+      }   
+
+
+   })
+</script>
+</body>

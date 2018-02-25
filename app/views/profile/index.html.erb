@@ -1,0 +1,205 @@
+<body class="dash-body nav-sm" id="dash">
+    <div class="container body">
+        <div class="main_container">
+            <%= render partial: "layouts/left_col", :locals => {active: "Profile"} %>
+            <%= render partial: "layouts/nav_bar", :locals => {active: "Profile"} %>
+            <div class="right_col" >
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h5 class="">Profile Settings</h5>
+                            </div>
+                            <div class="x_content">
+                                <div class="row">
+                                    <div class="profilePage">
+                                        <%= form_for @user, url: profile_path do |f|%>
+                                            <fieldset>
+                                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                                    <div class="userDetails">
+                                                        <div class="UserImage">
+                                                            <% if @user.image.blank? %>
+                                                                <%= image_tag "profile.png", class:"userImage"%>
+                                                            <% else %>
+                                                                <%= image_tag @user.image, class:"userImage"%>
+                                                            <% end %>    
+                                                        </div>
+                                                        <div class="UploadImage">
+                                                            <div class="Upload">
+                                                                <%= f.file_field :image, class:""%>
+                                                            </div>
+                                                        </div>
+                                                        <div class="UserInfo">
+                                                            <div class="Fname">
+                                                                <%= f.text_field :first_name, class:"profileFields", id:"first_name"%>
+                                                                <p class="r-error-message" id="Fn" style="text-align:center">First Name is missing</p>
+                                                            </div>
+                                                            <div class="Lname">
+                                                                <%= f.text_field :last_name, class:"profileFields", id: "last_name"%>
+                                                                <p class="r-error-message" id="Ln" style="text-align:center">Last Name is missing</p>
+                                                            </div>
+                                                            <div class="UserName">
+                                                                <%= f.text_field :user_name, class:"profileFields", id:"User_name"%>
+                                                                <p class="r-error-message" id="Uname" style="text-align:center">User Name is missing</p>
+                                                            </div>
+                                                            <div class="Phone">
+                                                                <%= f.text_field :phone, class:"profileFields", id:"phone",require: true,  onkeypress:'validate(event)',  minlength:"10", maxlength:"10"%>
+                                                                <p class="r-error-message" id="phn" style="text-align:center">Phone number is missing</p>
+                                                            </div>
+                                                            <div class="Email">
+                                                                <%= f.text_field :email, class:"profileFields", id:"email"%>
+                                                                <p class="r-error-message" id="Email" style="text-align:center">Email is missing</p>
+                                                            </div>
+                                                            <div class="SubmitDetails">
+                                                                <%= f.submit "Update", class:"SubmitProfileInfo"%>
+                                                                <span>
+                                                                    <%= link_to logout_path, class:"Logout" do %>
+                                                                        LogOut
+                                                                    <% end %>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 col=sm-6 col-xs-12">
+                                                </div>
+                                            </fieldset>
+                                        <% end %>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h5 class="result_header">Toatl Snap</h4>           
+                            </div>
+                            <div class="x_content">
+                                <div class="row">
+                                    <div class="total">
+                                        <h4 class="count total_count"><%= @total_snap%></h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h5 class="result_header">Upload Snap</h4> 
+                            </div>
+                            <div class="x_content">
+                                <div class="row">
+                                    <div class="UploadImage">
+                                        <center style="padding:24px;">
+                                            <%= form_for @user_snap , url: snaps_path do |f| %>
+                                                <fieldset>
+                                                    <div class="row">
+                                                        <div class="UploadImageField">
+                                                            <%= f.file_field :image, class:"upimg" %>
+                                                            <p class="error-snap">Please Select an Image</p>
+                                                        </div>
+                                                    </div>       
+                                                    <div class="row">
+                                                        <div class="submitButton"> 
+                                                            <%= f.submit "Upload Snap", class:"uploadButm SnapUpload"%>
+                                                        </div>   
+                                                    </div>     
+                                                </fieldset>
+                                            <% end %>
+                                        </center>    
+                                    </DIV>    
+                                </div>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="UserSnap">
+                        <div class="col-md-12 col-sm-12 col-xs-12">   
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h4 class="result_header">User Snaps</h4>           
+                                </div>
+                                <div class="x_content">
+                                    <div class="row">
+                                        <% if @snaps.blank? %>
+                                                <p class="result_header">There is no snap yet!</p>
+                                        <% else %>
+                                            <% @snaps.each do |snap|%>
+                                                <div class="col-md-3 col-sm-3 col-xs-6" style="text-align: center;">
+                                                    <div class="image view view-first">
+                                                        <center>
+                                                            <%= image_tag snap.image, class:"", style:"width: 70%; display: block; position: relative;top: 38px;"%>
+                                                        </center>
+                                                    </div>
+                                                    <a  rel="nofollow" data-method="delete" class="delete_snap" href="/delete_snap/<%= snap.id%>"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                                </div>
+                                            <% end %>  
+                                        <% end %>      
+                                    </div>
+                                </div>
+                            </div>  
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    $('.SnapUpload').click(function(e){
+        var snap = $('#snap_image').val()
+        if(snap == ""){
+         $('.error-snap').css('display','block');
+         $('.error-snap').fadeOut(3000);
+         e.preventDefault();
+
+        }
+    })
+    function validate(evt) {
+        var theEvent = evt || window.event;
+        var key = theEvent.keyCode || theEvent.which;
+        key = String.fromCharCode( key );
+        var regex = /[0-9]|\./;
+        if( !regex.test(key) ) {
+          theEvent.returnValue = false;
+          if(theEvent.preventDefault) theEvent.preventDefault();
+        }
+      }
+      $('.SubmitProfileInfo').click(function(e){
+        var first_name = $('#first_name').val();
+        if(first_name == ""){
+            e.preventDefault();
+            $("#Fn").css("display", "block");
+            $("#Fn").fadeOut(4000);
+        
+        }
+        var last_name = $('#last_name').val();
+        if(last_name == ""){
+            e.preventDefault();
+            $("#Ln").css("display", "block");
+           $("#Ln").fadeOut(4000);
+        } 
+        var email = $('#email').val();
+        if(email == ""){
+          e.preventDefault();
+          $("#Email").css("display", "block");
+         $("#Email").fadeOut(4000);
+        } 
+        var user_name = $('#User_name').val();
+        if(user_name == ""){
+          e.preventDefault();
+          $("#Uname").css("display", "block");
+          $("#Uname").fadeOut(4000);
+        } 
+        var phone = $('#phone').val();
+        if(phone == ""){
+          e.preventDefault();
+          $("#phn").css("display", "block");
+          $("#phn").fadeOut(4000);
+        }   
+  
+    })
+</script>
+</body>    

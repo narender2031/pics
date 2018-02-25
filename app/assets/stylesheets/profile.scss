@@ -1,0 +1,88 @@
+.editProfilePage{
+    border: 1px solid #444;
+    padding: 5px;
+    color: #444;
+    padding-left: 40px;
+    padding-right: 40px;
+}
+.editProfile{
+    text-align: center;
+    margin-top: 30px;
+}
+.profileFields{
+    padding: 4px;
+    width: 100%;
+    color: #444;
+    border: 1px solid #444;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+.Upload{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: #444;
+}
+.SubmitProfileInfo{
+    width: 30%;
+    color: #444;
+    border: 2px solid;
+    padding: 4px;
+    border-radius: 5px;
+}
+.SubmitProfileInfo:hover{
+    border: 2px solid #60bd6a;
+    color: #60bd6A;
+}
+.Logout:hover{
+    border: 2px solid #e15258;
+    background: no-repeat;
+    color: #e15258;
+}
+.uploadButm:hover{
+    border: 2px solid #60bd6a;
+    background: no-repeat;
+    color: #60bd6a;
+}
+.user-name{
+    margin-left: 10px;
+    color: #444;
+    font-size: 15px;
+}
+.uploadButm{
+    color: #fff;
+    padding: 4px;
+    background: #60bd6a;
+    border: 2px solid #60bd6a;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+.upimg{
+    margin-left: 46px;
+    margin-bottom: 24px;
+}
+.total_count{
+    text-align: center;
+    font-size: 60px !important;
+    color: #444;
+}
+.Logout{
+    margin-left: 10px;
+    border: 2px solid #e15258;
+    padding: 6px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-radius: 4PX;
+    background: #e15258;
+    COLOR: #fff;
+}
+.delete_snap{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+}
+.delete_snap:hover{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 10px;
+    color: #e15258;
+}

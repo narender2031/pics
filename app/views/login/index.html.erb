@@ -1,0 +1,76 @@
+<body id="loginBody" style=" background: url(http://p1.pichost.me/i/64/1886374.jpg) no-repeat center center fixed;">
+    <div class="row">
+        <div class="col-md-4 col-sm-3 col-xs-1">
+        </div>
+        <div class="col-md-4 col-sm-6 col-xs-10">
+            <div class="row">
+                <center>
+                    <div class="loginPanel">
+                        <div class="logo">
+                            <div class="row">
+                                <div class="logoPanel">
+                                    <%= image_tag "logo.png", class:"brandLogo"%>
+                                </div>
+                            </div>
+                        </div>
+                        <% flash.each do |name, msg|%>
+                            <center> 
+                                <div class='flash-message alert alert-<%= name %> flash-message-dashbord' id="flash-message-desktop">
+                                    <center><p class="flash-message-dash" style="position: relative;top: -2px;color: #facdcd;"><%= msg %></p></center>
+                                </div>
+                            </center>
+                        <% end %>
+                        <div class="loginDetails">
+                            <div class="loginFrom">
+                                <%= form_tag login_path do %>
+                                    <fieldset class="loginFieldset">
+                                        <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;">
+                                            <div class="email">
+                                                <%= email_field_tag :email, params[:email], class:"LoginFields", placeholder:"Email", id:"loginemail"%>
+                                                <p class="r-error-message" id="Lemail">Email  is missing</p>
+                                            </div>    
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="password">
+                                                <%= password_field_tag :password, params[:password], class:"LoginFields", placeholder:"Password", id:"password_fi"%>
+                                                <p class="r-error-message" id="Lpass">Password  is missing</p>
+                                            </div>    
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="password">
+                                                <%= submit_tag "LogIn", class:"LoginButton "%>
+                                            </div>    
+                                        </div>
+                                        <div class="col-md-12 col-sm-12 col-xs-12">
+                                            <div class="RegisterConnect">
+                                                <p class="notResister" style="color: #fff;">Not register? <span class="createAnAccountLink" style="color: #60bd6a;"><%= link_to register_path do %>Create an account.<% end %></span></p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                <% end %>  
+                            </div>
+                        </center>    
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-sm-3 col-xs-1">
+        </div>
+    </div>
+    <script>
+    $(".LoginButton").on('click', function(e){
+        var email =  $("#loginemail").val();
+        if(email == ""){
+            e.preventDefault();
+           $("#Lemail").css("display", "block");
+           $("#Lemail").fadeOut(4000);
+        }   
+        var password = $('#password_fi').val()
+        if(password == ""){
+             e.preventDefault();
+            $("#Lpass").css("display", "block");
+            $("#Lpass").fadeOut(4000);
+        }                            
+    })
+    </script>
+</body>

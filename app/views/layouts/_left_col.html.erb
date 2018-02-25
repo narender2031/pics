@@ -1,0 +1,32 @@
+<div class="col-md-3 left_col" id="menu-bar">
+<div class="left_col scroll-view">
+    <div class="navbar nav_title" id="panel1">
+        
+        <%= link_to root_path, class:"site_title" do %>
+            <%= image_tag "logo.png"%>
+        <% end %>
+        
+    </div>
+    <div class="clearfix">
+    
+    </div>
+    <div id="sidebar-menu" class="main_menu_side hidden_print main_menu">
+        <div class="menu_section active">
+            <ul class="nav side-menu">
+            <li class="<%= 'active' if active == 'Dashboard'  %>">
+                <%= link_to root_path do %>
+                    <i class="fa fa-home"></i>
+                    Dashboard
+                <% end %>
+            </li>
+            <li class="<%= 'active' if active == 'Profile'  %>">
+                <%= link_to profile_path do %>
+                    <i class="fa fa-user"></i>
+                    Profile
+                <% end %>
+            </li>
+            </ul>    
+        </div>
+    </div>
+</div>
+</div>
